@@ -14,4 +14,6 @@ class UserActivityViewModel (val repository: DataSource) : ViewModel() {
         repository.insertUser(User(1,"alvaro","hola","adios","comoestas","hola","hola"))
 
     }
+
+
 }

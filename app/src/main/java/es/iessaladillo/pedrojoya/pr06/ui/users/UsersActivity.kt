@@ -14,11 +14,12 @@ import es.iessaladillo.pedrojoya.pr06.data.model.User
 import es.iessaladillo.pedrojoya.pr06.databinding.UserActivityBinding
 import es.iessaladillo.pedrojoya.pr06.databinding.UsersActivityBinding
 import es.iessaladillo.pedrojoya.pr06.ui.add_user.AddUserActivity
+import es.iessaladillo.pedrojoya.pr06.ui.edit_user.EditUserActivity
 import kotlinx.android.synthetic.main.users_activity.*
 import kotlinx.android.synthetic.main.users_activity.view.*
 import kotlinx.android.synthetic.main.users_activity_item.view.*
 
-class UsersActivity : AppCompatActivity() {
+class UsersActivity : AppCompatActivity(), UsersActivityAdapter.onItemClick{
 
     // TODO: Código de la actividad.
     //  Ten en cuenta que el recyclerview se muestra en forma de grid,
@@ -28,7 +29,9 @@ class UsersActivity : AppCompatActivity() {
     private val viewModel: UserActivityViewModel by viewModels{
         UserActivityViewModelFactory(Repository)
     }
-    val listAdapter:UsersActivityAdapter = UsersActivityAdapter()
+    val listAdapter:UsersActivityAdapter = UsersActivityAdapter().also {
+        it.setOnClickListenner(this@UsersActivity)
+    }
     private lateinit var binding: UsersActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,7 @@ class UsersActivity : AppCompatActivity() {
     private fun setupView() {
         setupRecyclerView()
         binding.lblEmptyView.setOnClickListener(View.OnClickListener { onAddUser() })
-        binding.lstUsers.botonEditar.setOnClickListener(View.OnClickListener {  })
+        //binding.lstUsers.botonEditar.setOnClickListener(View.OnClickListener {  })
 
     }
 
@@ -85,6 +88,13 @@ class UsersActivity : AppCompatActivity() {
 
     fun onAddUser() {
         startActivity(AddUserActivity.newIntent(this))
+    }
+
+    override fun onClick(position: Int) {
+        var id= listAdapter.getItemId(position)
+
+        startActivity(EditUserActivity.newIntent(this, listAdapter.getItemById(id)!!))
+
     }
 
 

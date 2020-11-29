@@ -1,6 +1,7 @@
 package es.iessaladillo.pedrojoya.pr06.ui.users
 
 import android.view.LayoutInflater
+import android.view.OrientationEventListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import es.iessaladillo.pedrojoya.pr06.data.model.User
@@ -9,13 +10,31 @@ import es.iessaladillo.pedrojoya.pr06.utils.loadUrl
 
 class UsersActivityAdapter() : RecyclerView.Adapter<UsersActivityAdapter.ViewHolder>() {
     private var data : List<User> = emptyList()
-
+    private var onClick:UsersActivityAdapter.onItemClick? =null
     init {
         setHasStableIds(true)
     }
 
-    class ViewHolder(private val binding: UsersActivityItemBinding) :RecyclerView.ViewHolder(binding.root) {
+    override fun getItemId(position: Int): Long {
+        return data[position].id
+    }
+     fun getItemById(id: Long): User? {
+         var usuarioD:User?=null
+        for (usuarios in data){
+            if(usuarios.id==id){
+                usuarioD=usuarios
+            }
+        }
+         return usuarioD
+    }
+    fun setOnClickListenner(listener: UsersActivityAdapter.onItemClick){
+        onClick=listener
+    }
 
+   inner class ViewHolder(private val binding: UsersActivityItemBinding) :RecyclerView.ViewHolder(binding.root) {
+            init {
+                binding.botonEditar.setOnClickListener{ onClick?.onClick(bindingAdapterPosition) }
+            }
         fun bind(user: User){
             binding.lblNombre.text=user.nombre
             binding.lblEmail.text=user.email
@@ -24,6 +43,10 @@ class UsersActivityAdapter() : RecyclerView.Adapter<UsersActivityAdapter.ViewHol
 
 
         }
+
+    }
+    interface onItemClick{
+        fun onClick(position: Int)
     }
 
     fun submitList(lista: List<User>){
