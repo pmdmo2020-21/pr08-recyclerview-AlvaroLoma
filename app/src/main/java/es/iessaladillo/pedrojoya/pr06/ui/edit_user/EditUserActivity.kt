@@ -4,6 +4,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import es.iessaladillo.pedrojoya.pr06.R
+import es.iessaladillo.pedrojoya.pr06.databinding.AddUserActivityBinding
+import es.iessaladillo.pedrojoya.pr06.databinding.UsersActivityBinding
 
 class EditUserActivity : AppCompatActivity() {
 
@@ -11,6 +13,7 @@ class EditUserActivity : AppCompatActivity() {
     //  Ten en cuenta que la actividad debe recibir a través del intent
     //  con el que es llamado el objeto User corresondiente
     //  ...
+    private lateinit var binding: AddUserActivityBinding
 
     // NO TOCAR: Estos métodos gestionan el menú y su gestión
 
