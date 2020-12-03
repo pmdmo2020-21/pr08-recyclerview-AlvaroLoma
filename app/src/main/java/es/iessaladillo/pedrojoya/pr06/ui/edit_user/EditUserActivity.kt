@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.set
 import es.iessaladillo.pedrojoya.pr06.R
+import es.iessaladillo.pedrojoya.pr06.data.Repository
 import es.iessaladillo.pedrojoya.pr06.data.model.User
 import es.iessaladillo.pedrojoya.pr06.databinding.AddUserActivityBinding
 import es.iessaladillo.pedrojoya.pr06.databinding.UsersActivityBinding
 import es.iessaladillo.pedrojoya.pr06.ui.add_user.AddUserActivity
+import es.iessaladillo.pedrojoya.pr06.ui.users.UserActivityViewModel
+import es.iessaladillo.pedrojoya.pr06.ui.users.UserActivityViewModelFactory
 import es.iessaladillo.pedrojoya.pr06.utils.loadUrl
 
 class EditUserActivity : AppCompatActivity() {
@@ -29,6 +33,9 @@ class EditUserActivity : AppCompatActivity() {
         }
     }
     private lateinit var binding: AddUserActivityBinding
+    private val viewModel: EditUserViewModel by viewModels{
+        EditUserActivityViewModelFactory(Repository)
+    }
     private lateinit var user: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +47,12 @@ class EditUserActivity : AppCompatActivity() {
 
     private fun reciveData() {
         user= intent.getParcelableExtra<User>("USER")!!
-        binding.email.text="ihlhvlhbli"
+
 
     }
 
     private fun setupView() {
+        binding.image.setOnClickListener { binding.image.loadUrl(viewModel.getRandomImagen()) }
         binding.image.loadUrl(user.photoUrl)
         binding.editNombre.setText(user.nombre)
         binding.editTelefono.setText(user.phoneNumber)
@@ -78,7 +86,9 @@ class EditUserActivity : AppCompatActivity() {
     // FIN NO TOCAR
 
     private fun onSave() {
-        // TODO: Acciones a realizar al querer salvar
+       viewModel.editUser(user.copy( nombre = binding.editNombre.text.toString(),email = binding.editEmail.text.toString(),phoneNumber = binding.editTelefono.text.toString()))
+       finish()
+        super.onBackPressed()
     }
 
 }

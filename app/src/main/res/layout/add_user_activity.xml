@@ -73,11 +73,11 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
         app:layout_constraintBottom_toBottomOf="@+id/editEmail"
-        app:layout_constraintEnd_toStartOf="@+id/editTelefono"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/editEmail"
         app:layout_constraintTop_toTopOf="@+id/editEmail"
+        app:layout_constraintVertical_bias="0.48"
         app:srcCompat="@drawable/ic_email_24dp" />
 
     <EditText
@@ -86,7 +86,7 @@
         android:layout_height="55dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/editEmail"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintHorizontal_bias="0.5"
@@ -150,6 +150,7 @@
         android:inputType="textPersonName"
         android:text=""
         android:layout_marginStart="@dimen/margin_2x"
+        android:imeOptions="actionDone"
         app:layout_constraintEnd_toEndOf="@+id/editDirrecion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/web" />
